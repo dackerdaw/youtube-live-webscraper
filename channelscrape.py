@@ -70,7 +70,7 @@ class ChannelScrape:
         # But items is still an array, so just in case
         if "expandedShelfContentsRenderer" in content:
             for item in content['expandedShelfContentsRenderer']['items']:
-                liveDateEpoch = item['videoRenderer']['upcomingEventData']['startTime']
+                liveDateEpoch = int(item['videoRenderer']['upcomingEventData']['startTime'])
                 liveDate = datetime.fromtimestamp(mktime(gmtime(liveDateEpoch)))
                 if item['videoRenderer']['thumbnailOverlays'][0]['thumbnailOverlayTimeStatusRenderer']['style'] == "UPCOMING" and liveDate < dateThreshold:
                     collectedContents.append(item['videoRenderer']['videoId'])
@@ -78,7 +78,7 @@ class ChannelScrape:
         # Multiple upcoming livestreams
         elif "horizontalListRenderer" in content:
             for item in content['horizontalListRenderer']['items']:
-                liveDateEpoch = item['videoRenderer']['upcomingEventData']['startTime']
+                liveDateEpoch = int(item['videoRenderer']['upcomingEventData']['startTime'])
                 liveDate = datetime.fromtimestamp(mktime(gmtime(liveDateEpoch)))
                 if item['gridVideoRenderer']['thumbnailOverlays'][0]['thumbnailOverlayTimeStatusRenderer']['style'] == "UPCOMING" and liveDate < dateThreshold:
                     collectedContents.append(item['gridVideoRenderer']['videoId'])
